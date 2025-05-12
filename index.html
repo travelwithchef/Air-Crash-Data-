@@ -1,236 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fatalities Data Analysis</title>
-  <!-- Bootstrap CSS for styling -->
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Font Awesome for icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-  <!-- Custom CSS for design improvements -->
-  <style>
-    body {
-      background: linear-gradient(135deg, #DC143C, #f5f5f5);
-      font-family: 'Arial', sans-serif;
-    }
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 30px;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 30px;
-      font-size: 32px;
-      font-weight: bold;
-    }
-    .filter-container {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-    }
-    .filter-container select {
-      border: 2px solid #007bff;
-      border-radius: 5px;
-      padding: 10px;
-      font-size: 16px;
-      transition: 0.3s;
-    }
-    .filter-container select:hover {
-      border-color: #0056b3;
-    }
-    .table-container {
-      margin-top: 30px;
-    }
-    table {
-      width: 100%;
-      background-color: #fff;
-      border-collapse: collapse;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    table thead {
-      background-color: #007bff;
-      color: white;
-      font-size: 18px;
-    }
-    table tbody {
-      font-size: 16px;
-    }
-    table tbody tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    table tbody tr:hover {
-      background-color: #f1f1f1;
-      cursor: pointer;
-    }
-    .chart-container {
-      width: 80%;
-      margin: 40px auto;
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    .chart-container canvas {
-      width: 100% !important;
-      height: 400px !important;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 14px;
-      color: #333;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Air Crash Data Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #1E2A47;
+        }
+        h1 {
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        /* Header Styling */
+        .navbar {
+            background-color: #005f73;
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        /* Card Container for Filters */
+        .filters-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .filter-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            width: 23%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-card select, .filter-card input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-card label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        /* Table Styling */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .data-table th {
+            background-color: #005f73;
+            color: white;
+        }
+
+        .data-table tbody tr:nth-child(odd) {
+            background-color: #f4f4f9;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        /* Chart Styling */
+        .chart-container {
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 1rem;
+            color: #777;
+        }
+
+        /* Mobile Responsiveness */
+        @media screen and (max-width: 768px) {
+            .filters-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .filter-card {
+                width: 100%;
+            }
+        }
+
+        /* Buttons */
+        .btn {
+            background-color: #3d5a80;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2a4d63;
+        }
+
+    </style>
 </head>
 <body>
-
-  <div class="container">
-    <h2>Air Crash Fatalities Data</h2>
-    
-    <!-- Filter for year range -->
-    <div class="filter-container">
-      <label for="year-filter" style="font-size: 16px;">Filter by Year:</label>
-      <select id="year-filter" class="form-control w-25">
-        <option value="">All Years</option>
-        <option value="1913">1913</option>
-        <option value="1930">1930</option>
-        <option value="1935">1935</option>
-        <option value="1940">1940</option>
-        <option value="1945">1945</option>
-        <option value="1950">1950</option>
-        <option value="1955">1955</option>
-        <option value="1960">1960</option>
-        <option value="1965">1965</option>
-        <option value="1970">1970</option>
-        <option value="1975">1975</option>
-        <option value="1980">1980</option>
-        <option value="1985">1985</option>
-        <option value="1990">1990</option>
-        <option value="1995">1995</option>
-        <option value="2000">2000</option>
-        <option value="2005">2005</option>
-        <option value="2010">2010</option>
-        <option value="2015">2015</option>
-        <option value="2020">2020</option>
-        <option value="2025">2025</option>
-      </select>
+    <div class="navbar">
+        <h1>Advanced Air Crash Data Analysis</h1>
     </div>
 
-    <!-- Table displaying the data -->
-    <div class="table-container">
-      <table id="cheftable" class="table table-striped table-bordered table-sm">
+    <!-- Filters Section -->
+    <div class="filters-container">
+        <div class="filter-card">
+            <label for="yearFilter">Filter by Year</label>
+            <select id="yearFilter" class="filter">
+                <option value="all">All Years</option>
+                <option value="1990">1990</option>
+                <option value="2000">2000</option>
+                <option value="2010">2010</option>
+                <!-- Add more years as required -->
+            </select>
+        </div>
+
+        <div class="filter-card">
+            <label for="countryFilter">Filter by Country</label>
+            <select id="countryFilter" class="filter">
+                <option value="all">All Countries</option>
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <!-- Add more countries as required -->
+            </select>
+        </div>
+
+        <div class="filter-card">
+            <label for="causeFilter">Filter by Cause</label>
+            <select id="causeFilter" class="filter">
+                <option value="all">All Causes</option>
+                <option value="Mechanical Failure">Mechanical Failure</option>
+                <option value="Pilot Error">Pilot Error</option>
+                <option value="Weather Conditions">Weather Conditions</option>
+                <!-- Add more causes as required -->
+            </select>
+        </div>
+        
+        <div class="filter-card">
+            <label for="fatalitiesFilter">Filter by Fatalities</label>
+            <input type="number" id="fatalitiesFilter" placeholder="Minimum Fatalities" />
+        </div>
+    </div>
+
+    <!-- Table to Display Data -->
+    <table class="data-table" id="airCrashTable">
         <thead>
-          <tr>
-            <th scope="col">Year</th>
-            <th scope="col">Fatalities</th>
-          </tr>
+            <tr>
+                <th>Year</th>
+                <th>Country</th>
+                <th>Cause</th>
+                <th>Fatalities</th>
+                <th>Flight Number</th>
+            </tr>
         </thead>
         <tbody>
-          <tr data-year="1913" data-fatalities="28">
-            <td>1913</td>
-            <td>28</td>
-          </tr>
-          <tr data-year="1930" data-fatalities="2">
-            <td>1930</td>
-            <td>2</td>
-          </tr>
-          <tr data-year="1935" data-fatalities="5">
-            <td>1935</td>
-            <td>5</td>
-          </tr>
-          <tr data-year="1940" data-fatalities="25">
-            <td>1940</td>
-            <td>25</td>
-          </tr>
-          <tr data-year="1945" data-fatalities="17">
-            <td>1945</td>
-            <td>17</td>
-          </tr>
-          <tr data-year="1950" data-fatalities="44">
-            <td>1950</td>
-            <td>44</td>
-          </tr>
-          <tr data-year="1955" data-fatalities="13">
-            <td>1955</td>
-            <td>13</td>
-          </tr>
-          <tr data-year="1960" data-fatalities="31">
-            <td>1960</td>
-            <td>31</td>
-          </tr>
-          <tr data-year="1965" data-fatalities="30">
-            <td>1965</td>
-            <td>30</td>
-          </tr>
-          <tr data-year="1970" data-fatalities="0">
-            <td>1970</td>
-            <td>0</td>
-          </tr>
-          <tr data-year="1975" data-fatalities="42">
-            <td>1975</td>
-            <td>42</td>
-          </tr>
-          <tr data-year="1980" data-fatalities="128">
-            <td>1980</td>
-            <td>128</td>
-          </tr>
-          <tr data-year="1985" data-fatalities="0">
-            <td>1985</td>
-            <td>0</td>
-          </tr>
-          <tr data-year="1990" data-fatalities="92">
-            <td>1990</td>
-            <td>92</td>
-          </tr>
-          <tr data-year="1995" data-fatalities="3">
-            <td>1995</td>
-            <td>3</td>
-          </tr>
-          <tr data-year="2000" data-fatalities="88">
-            <td>2000</td>
-            <td>88</td>
-          </tr>
-          <tr data-year="2005" data-fatalities="160">
-            <td>2005</td>
-            <td>160</td>
-          </tr>
-          <tr data-year="2010" data-fatalities="158">
-            <td>2010</td>
-            <td>158</td>
-          </tr>
-          <tr data-year="2015" data-fatalities="0">
-            <td>2015</td>
-            <td>0</td>
-          </tr>
-          <tr data-year="2020" data-fatalities="176">
-            <td>2020</td>
-            <td>176</td>
-          </tr>
-          <tr data-year="2025" data-fatalities="1">
-            <td>2025</td>
-            <td>1</td>
-          </tr>
+            <!-- Data Rows go here -->
         </tbody>
-      </table>
-    </div>
+    </table>
 
-    <!-- Chart displaying the fatalities data -->
+    <!-- Chart Section -->
     <div class="chart-container">
-      <canvas id="fatalitiesChart"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
 
-  </div>
+    <!-- Footer Section -->
+    <div class="footer">
+        <p>&copy; 2025 Air Crash Data Analytics | All rights reserved.</p>
+    </div>
 
-  <!-- Chart.js Script to generate the chart -->
-  <script>
-    // Initial Data for the Chart
-    const labels = ['1913', '1930', '1935', '1940', '1945', '1950', '1955', '1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025'];
-    const fatalitiesData = [28, 2, 5, 25, 17, 44, 13, 31, 30, 0, 42, 128, 0, 92, 3, 88, 160, 158, 0, 176, 1];
+    <script>
+        // Your actual data set
+        const airCrashData = [
+            { year: 1990, country: "USA", cause: "Mechanical Failure", fatalities: 100, flightNumber: "AA123" },
+            { year: 2000, country: "Canada", cause: "Weather Conditions", fatalities: 50, flightNumber: "CA456" },
+            { year: 2010, country: "UK", cause: "Pilot Error", fatalities: 200, flightNumber: "UK789" },
+            { year: 2005, country: "USA", cause: "Mechanical Failure", fatalities: 75, flightNumber: "AA567" },
+            { year: 1995, country: "Canada", cause: "Pilot Error", fatalities: 150, flightNumber: "CA890" },
+            { year: 2015, country: "USA", cause: "Weather Conditions", fatalities: 300, flightNumber: "AA234" },
+            { year: 2000, country: "USA", cause: "Pilot Error", fatalities: 500, flightNumber: "US456" },
+            { year: 2005, country: "UK", cause: "Weather Conditions", fatalities: 120, flightNumber: "UK112" },
+            { year: 1990, country: "Canada", cause: "Mechanical Failure", fatalities: 60, flightNumber: "CA999" },
+            { year: 2000, country: "USA", cause: "Mechanical Failure", fatalities: 45, flightNumber: "AA223" },
+            { year: 2005, country: "Canada", cause: "Pilot Error", fatalities: 80, flightNumber: "CA333" },
+            { year: 2010, country: "USA", cause: "Pilot Error", fatalities: 120, flightNumber: "US999" },
+            // Add more records as required
+        ];
 
-    var
+        // Function to render table
+        function renderTable(data) {
+            const tableBody = document.getElementById("airCrashTable").getElementsByTagName('tbody')[0];
+            tableBody.innerHTML = ''; // Clear existing rows
+            data.forEach(row => {
+                const newRow = tableBody.insertRow();
+                Object.values(row).forEach(value => {
+                    const cell = newRow.insertCell();
+                    cell.textContent = value;
+                });
+            });
+        }
+
+        // Function to render chart
+        function renderChart(data) {
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const yearCount = {};
+            data.forEach(item => {
+                if (yearCount[item.year]) {
+                    yearCount[item.year]++;
