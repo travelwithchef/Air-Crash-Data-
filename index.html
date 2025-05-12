@@ -1,255 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Air Crash Data Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* General Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-        }
-        h1, h2 {
-            color: #1E2A47;
-        }
-        h1 {
-            margin-bottom: 30px;
-            font-size: 2.5rem;
-        }
-        h2 {
-            font-size: 1.8rem;
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
-        
-        /* Header Styling */
-        .navbar {
-            background-color: #005f73;
-            color: white;
-            padding: 15px 0;
-            text-align: center;
-        }
-
-        /* Card Container for Filters */
-        .filters-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        .filter-card {
-            background-color: #ffffff;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 15px;
-            width: 23%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .filter-card select, .filter-card input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-        }
-
-        .filter-card label {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        /* Table Styling */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-
-        .data-table th, .data-table td {
-            padding: 12px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        .data-table th {
-            background-color: #005f73;
-            color: white;
-        }
-
-        .data-table tbody tr:nth-child(odd) {
-            background-color: #f4f4f9;
-        }
-
-        .data-table tbody tr:nth-child(even) {
-            background-color: #ffffff;
-        }
-
-        /* Chart Styling */
-        .chart-container {
-            margin-top: 30px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 1rem;
-            color: #777;
-        }
-
-        /* Mobile Responsiveness */
-        @media screen and (max-width: 768px) {
-            .filters-container {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .filter-card {
-                width: 100%;
-            }
-        }
-
-        /* Buttons */
-        .btn {
-            background-color: #3d5a80;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn:hover {
-            background-color: #2a4d63;
-        }
-
-    </style>
+  <meta charset="UTF-8">
+  <title>Aviation Incident Database</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f4f4f4;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    th {
+      background-color: #222;
+      color: #fff;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    caption {
+      caption-side: top;
+      font-size: 1.5em;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-    <div class="navbar">
-        <h1>Advanced Air Crash Data Analysis</h1>
-    </div>
 
-    <!-- Filters Section -->
-    <div class="filters-container">
-        <div class="filter-card">
-            <label for="yearFilter">Filter by Year</label>
-            <select id="yearFilter" class="filter">
-                <option value="all">All Years</option>
-                <option value="1990">1990</option>
-                <option value="2000">2000</option>
-                <option value="2010">2010</option>
-                <!-- Add more years as required -->
-            </select>
-        </div>
+<table>
+  <caption>Aviation Incident Records</caption>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Date</th>
+      <th>Site</th>
+      <th>Aircraft Type</th>
+      <th>Destination</th>
+      <th>Crew</th>
+      <th>Fatalities</th>
+      <th>Survived</th>
+      <th>Summary</th>
+      <th>Location</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>1913</td><td>17.10.1913</td><td>Johannistal Air</td><td>Airship</td><td>...</td><td>28</td><td>28</td><td>0</td><td>Explosion of Gasoline</td><td>-</td></tr>
+    <tr><td>1930</td><td>10.02.1930</td><td>Air Union Farman</td><td>Farman F63</td><td>Marden, Kent</td><td>3</td><td>2</td><td>4</td><td>Engine Failure</td><td>51°10'N 0°31'E</td></tr>
+    <tr><td>1935</td><td>06.05.1935</td><td>TWA Flight-6</td><td>Douglas DC4</td><td>Near Atlanta</td><td>2</td><td>5</td><td>8</td><td>Bad Weather</td><td>39.93°N 92.59°W</td></tr>
+    <tr><td>1940</td><td>31.08.1940</td><td>Lovettsville Air Disaster</td><td>Douglas DC3</td><td>Virginia</td><td>4</td><td>25</td><td>0</td><td>Severe Rainstorm</td><td>39°16'24"N 77°41'05"W</td></tr>
+    <tr><td>1945</td><td>23.02.1945</td><td>American Airlines-009</td><td>Douglas DC3-237</td><td>Glade Mountain</td><td>3</td><td>17</td><td>5</td><td>Engine Failure in Rain</td><td>36°53'36"N 81°16'34"W</td></tr>
+    <tr><td>1950</td><td>12.06.1950</td><td>Air France</td><td>Douglas DC4-1000</td><td>Sea of Bahrain</td><td>8</td><td>44</td><td>6</td><td>-</td><td>-</td></tr>
+    <tr><td>1955</td><td>20.03.1955</td><td>American Airlines-711</td><td>Covar CV240</td><td>Near Springfield Airport</td><td>3</td><td>13</td><td>22</td><td>Human Error</td><td>0.25 mi to Springfield</td></tr>
+    <tr><td>1960</td><td>26.09.1960</td><td>Austrian Airlines-901</td><td>Vickers 837</td><td>11 km from Sheremetyevo</td><td>6</td><td>31</td><td>6</td><td>Human Error</td><td>11 km from Sheremetyevo</td></tr>
+    <tr><td>1965</td><td>05.05.1965</td><td>Iberia Airlines-401</td><td>Lockheed L1049</td><td>Los Redos Airport</td><td>9</td><td>30</td><td>19</td><td>Poor Visual on Runway</td><td>Los Redos Airport</td></tr>
+    <tr><td>1970</td><td>31.03.1970</td><td>Japan Airlines-401</td><td>Boeing 727-89</td><td>Japan</td><td>7</td><td>0</td><td>0</td><td>Hijacked</td><td>Japan</td></tr>
+    <tr><td>1975</td><td>30.01.1975</td><td>Turkish Airlines-345</td><td>Fokker F28-1000</td><td>Sea of Marmara</td><td>4</td><td>42</td><td>0</td><td>Lost at sea</td><td>40°74'72"N 28.666°E</td></tr>
+    <tr><td>1980</td><td>21.01.1980</td><td>Iran Air-291</td><td>EP-IRD</td><td>Albourz Mountain</td><td>8</td><td>128</td><td>0</td><td>Human Error</td><td>35°44'N 51°25'E</td></tr>
+    <tr><td>1985</td><td>19.02.1985</td><td>China Airlines-006</td><td>Boeing 747 SP04</td><td>Pacific Ocean</td><td>23</td><td>0</td><td>274</td><td>Engine Failure</td><td>Pacific Ocean</td></tr>
+    <tr><td>1990</td><td>14.02.1990</td><td>Indian Airlines-605</td><td>Airbus A320</td><td>Karnataka Golf Club</td><td>7</td><td>92</td><td>54</td><td>Fire</td><td>12.948°N 77.6478°E</td></tr>
+    <tr><td>1995</td><td>11.02.1995</td><td>Air Transport Intl-782</td><td>MccD</td><td>Missouri, USA</td><td>3</td><td>3</td><td>0</td><td>Human Error</td><td>39°18'50"N 94°43'51.8"W</td></tr>
+    <tr><td>2000</td><td>31.01.2000</td><td>Alaska Airlines-261</td><td>Mcc MD83</td><td>Pacific Ocean</td><td>5</td><td>88</td><td>0</td><td>Human Error</td><td>34°03.5'N 119°20.8'W</td></tr>
+    <tr><td>2005</td><td>16.08.2005</td><td>W. Caribbean Air-708</td><td>Mcc MD82</td><td>Venezuela</td><td>8</td><td>160</td><td>0</td><td>Human Error</td><td>9°39'59"N 72°36'40"W</td></tr>
+    <tr><td>2010</td><td>22.05.2010</td><td>Air India Express-812</td><td>Boeing 737-800</td><td>Mangalore</td><td>6</td><td>158</td><td>8</td><td>Human Error</td><td>12°56'48"N 74°52'25"E</td></tr>
+    <tr><td>2015</td><td>08.09.2015</td><td>British Airways-2276</td><td>Boeing 777</td><td>Nevada, USA</td><td>13</td><td>0</td><td>17</td><td>Fire</td><td>36°4'34.67"N 115°9'8.96"W</td></tr>
+    <tr><td>2020</td><td>08.01.2020</td><td>Ukraine Intl Air-752</td><td>Boeing 777</td><td>Imam Khomaini Airport</td><td>9</td><td>176</td><td>0</td><td>Missile Fired</td><td>35°33'40"N 51°6'14"E</td></tr>
+    <tr><td>2025</td><td>17.04.2025</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+  </tbody>
+</table>
 
-        <div class="filter-card">
-            <label for="countryFilter">Filter by Country</label>
-            <select id="countryFilter" class="filter">
-                <option value="all">All Countries</option>
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <!-- Add more countries as required -->
-            </select>
-        </div>
-
-        <div class="filter-card">
-            <label for="causeFilter">Filter by Cause</label>
-            <select id="causeFilter" class="filter">
-                <option value="all">All Causes</option>
-                <option value="Mechanical Failure">Mechanical Failure</option>
-                <option value="Pilot Error">Pilot Error</option>
-                <option value="Weather Conditions">Weather Conditions</option>
-                <!-- Add more causes as required -->
-            </select>
-        </div>
-        
-        <div class="filter-card">
-            <label for="fatalitiesFilter">Filter by Fatalities</label>
-            <input type="number" id="fatalitiesFilter" placeholder="Minimum Fatalities" />
-        </div>
-    </div>
-
-    <!-- Table to Display Data -->
-    <table class="data-table" id="airCrashTable">
-        <thead>
-            <tr>
-                <th>Year</th>
-                <th>Country</th>
-                <th>Cause</th>
-                <th>Fatalities</th>
-                <th>Flight Number</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Data Rows go here -->
-        </tbody>
-    </table>
-
-    <!-- Chart Section -->
-    <div class="chart-container">
-        <canvas id="myChart"></canvas>
-    </div>
-
-    <!-- Footer Section -->
-    <div class="footer">
-        <p>&copy; 2025 Air Crash Data Analytics | All rights reserved.</p>
-    </div>
-
-    <script>
-        // Your actual data set
-        const airCrashData = [
-            { year: 1990, country: "USA", cause: "Mechanical Failure", fatalities: 100, flightNumber: "AA123" },
-            { year: 2000, country: "Canada", cause: "Weather Conditions", fatalities: 50, flightNumber: "CA456" },
-            { year: 2010, country: "UK", cause: "Pilot Error", fatalities: 200, flightNumber: "UK789" },
-            { year: 2005, country: "USA", cause: "Mechanical Failure", fatalities: 75, flightNumber: "AA567" },
-            { year: 1995, country: "Canada", cause: "Pilot Error", fatalities: 150, flightNumber: "CA890" },
-            { year: 2015, country: "USA", cause: "Weather Conditions", fatalities: 300, flightNumber: "AA234" },
-            { year: 2000, country: "USA", cause: "Pilot Error", fatalities: 500, flightNumber: "US456" },
-            { year: 2005, country: "UK", cause: "Weather Conditions", fatalities: 120, flightNumber: "UK112" },
-            { year: 1990, country: "Canada", cause: "Mechanical Failure", fatalities: 60, flightNumber: "CA999" },
-            { year: 2000, country: "USA", cause: "Mechanical Failure", fatalities: 45, flightNumber: "AA223" },
-            { year: 2005, country: "Canada", cause: "Pilot Error", fatalities: 80, flightNumber: "CA333" },
-            { year: 2010, country: "USA", cause: "Pilot Error", fatalities: 120, flightNumber: "US999" },
-            // Add more records as required
-        ];
-
-        // Function to render table
-        function renderTable(data) {
-            const tableBody = document.getElementById("airCrashTable").getElementsByTagName('tbody')[0];
-            tableBody.innerHTML = ''; // Clear existing rows
-            data.forEach(row => {
-                const newRow = tableBody.insertRow();
-                Object.values(row).forEach(value => {
-                    const cell = newRow.insertCell();
-                    cell.textContent = value;
-                });
-            });
-        }
-
-        // Function to render chart
-        function renderChart(data) {
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const yearCount = {};
-            data.forEach(item => {
-                if (yearCount[item.year]) {
-                    yearCount[item.year]++;
+</body>
+                                            </html>
