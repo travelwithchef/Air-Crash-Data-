@@ -6,28 +6,96 @@
   <title>Fatalities Data Analysis</title>
   <!-- Bootstrap CSS for styling -->
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Chart.js library -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Font Awesome for icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <!-- Custom CSS for design improvements -->
   <style>
+    body {
+      background: linear-gradient(135deg, #DC143C, #f5f5f5);
+      font-family: 'Arial', sans-serif;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 32px;
+      font-weight: bold;
+    }
     .filter-container {
       margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+    .filter-container select {
+      border: 2px solid #007bff;
+      border-radius: 5px;
+      padding: 10px;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .filter-container select:hover {
+      border-color: #0056b3;
     }
     .table-container {
       margin-top: 30px;
     }
+    table {
+      width: 100%;
+      background-color: #fff;
+      border-collapse: collapse;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    table thead {
+      background-color: #007bff;
+      color: white;
+      font-size: 18px;
+    }
+    table tbody {
+      font-size: 16px;
+    }
+    table tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    table tbody tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+    }
     .chart-container {
-      width: 80%; 
-      margin: 20px auto;
+      width: 80%;
+      margin: 40px auto;
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .chart-container canvas {
+      width: 100% !important;
+      height: 400px !important;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      color: #333;
     }
   </style>
 </head>
 <body>
-  <div class="container mt-5">
+
+  <div class="container">
     <h2>Air Crash Fatalities Data</h2>
     
     <!-- Filter for year range -->
     <div class="filter-container">
-      <label for="year-filter">Filter by Year:</label>
+      <label for="year-filter" style="font-size: 16px;">Filter by Year:</label>
       <select id="year-filter" class="form-control w-25">
         <option value="">All Years</option>
         <option value="1913">1913</option>
@@ -165,74 +233,4 @@
     const labels = ['1913', '1930', '1935', '1940', '1945', '1950', '1955', '1960', '1965', '1970', '1975', '1980', '1985', '1990', '1995', '2000', '2005', '2010', '2015', '2020', '2025'];
     const fatalitiesData = [28, 2, 5, 25, 17, 44, 13, 31, 30, 0, 42, 128, 0, 92, 3, 88, 160, 158, 0, 176, 1];
 
-    var ctx = document.getElementById('fatalitiesChart').getContext('2d');
-    var fatalitiesChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [{
-          label: 'Fatalities',
-          data: fatalitiesData,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        },
-        tooltips: {
-          callbacks: {
-            label: function(tooltipItem) {
-              return tooltipItem.yLabel + ' fatalities';
-            }
-          }
-        }
-      }
-    });
-
-    // Filtering functionality
-    const filterSelect = document.getElementById('year-filter');
-    const tableRows = document.querySelectorAll('#cheftable tbody tr');
-
-    filterSelect.addEventListener('change', function() {
-      const selectedYear = filterSelect.value;
-      
-      tableRows.forEach(row => {
-        const rowYear = row.getAttribute('data-year');
-        if (selectedYear && rowYear !== selectedYear) {
-          row.style.display = 'none';
-        } else {
-          row.style.display = '';
-        }
-      });
-
-      // Update Chart based on filtered data
-      updateChart(selectedYear);
-    });
-
-    function updateChart(yearFilter) {
-      let filteredLabels = labels;
-      let filteredData = fatalitiesData;
-
-      if (yearFilter) {
-        const index = labels.indexOf(yearFilter);
-        filteredLabels = [labels[index]];
-        filteredData = [fatalitiesData[index]];
-      }
-
-      fatalitiesChart.data.labels = filteredLabels;
-      fatalitiesChart.data.datasets[0].data = filteredData;
-      fatalitiesChart.update();
-    }
-  </script>
-
-  <!-- Bootstrap JS (optional, if needed for other functionalities) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+    var
